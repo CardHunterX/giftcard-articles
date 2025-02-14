@@ -1,29 +1,29 @@
 import os
 import json
-import requests
-import time
-import base64
-import os
-import json
 
-tokens_json = os.getenv("TOKENS_JSON")
+# قراءة `TOKENS_JSON` من متغيرات البيئة
+tokens_json_str = os.getenv("TOKENS_JSON")
 
-if not tokens_json:
-    raise ValueError("⚠️ لم يتم العثور على 'TOKENS_JSON'! تأكد من إضافته في GitHub Secrets.")
+# التحقق من وجود `TOKENS_JSON`
+if not tokens_json_str:
+    raise ValueError("⚠️ لم يتم العثور على أي حسابات في 'TOKENS_JSON'!")
 
 # تحميل البيانات من JSON
-tokens_data = json.loads(tokens_json)
+tokens_data = json.loads(tokens_json_str)
 
-# 🔹 قراءة Access Tokens من GitHub Secrets
-tokens_json = os.getenv("TOKENS_JSON")
-if not tokens_json:
-    raise ValueError("⚠️ متغير البيئة 'TOKENS_JSON' غير متوفر في Secrets!")
+# التحقق من وجود الحسابات
+if "accounts" not in tokens_data or not tokens_data["accounts"]:
+    raise ValueError("⚠️ لا يوجد أي حسابات في 'TOKENS_JSON'!")
 
-tokens_data = json.loads(tokens_json)
-tokens = tokens_data.get("accounts", [])
+# استخدام الحسابات
+for account in tokens_data["accounts"]:
+    username = account.get("username")
+    token = account.get("github_token")
 
-if not tokens:
-    raise ValueError("⚠️ لم يتم العثور على أي حسابات في 'TOKENS_JSON'!")
+    if not username or not token:
+        raise ValueError(f"⚠️ بيانات غير مكتملة للحساب: {account}")
+
+    print(f"✅ تم العثور على الحساب: {username}")
 
 # 🔹 إعدادات المستودعات
 base_dir = "github_articles"
