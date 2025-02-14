@@ -20,7 +20,10 @@ jobs:
       - name: Install Dependencies
         run: pip install requests  # تثبيت المكتبات إذا لزم الأمر
 
+      - name: Create tokens.json
+        run: echo '${{ secrets.TOKENS_JSON }}' > tokens.json
+
       - name: Run Upload Script
         env:
-          TOKENS_JSON: ${{ secrets.TOKENS_JSON }}  # قراءة التوكنات مباشرةً من Secrets
+          TOKENS_JSON: ${{ secrets.TOKENS_JSON }}
         run: python upload_articles.py
