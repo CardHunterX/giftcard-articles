@@ -3,6 +3,16 @@ import json
 import requests
 import time
 import base64
+import os
+import json
+
+tokens_json = os.getenv("TOKENS_JSON")
+
+if not tokens_json:
+    raise ValueError("⚠️ لم يتم العثور على 'TOKENS_JSON'! تأكد من إضافته في GitHub Secrets.")
+
+# تحميل البيانات من JSON
+tokens_data = json.loads(tokens_json)
 
 # 🔹 قراءة Access Tokens من GitHub Secrets
 tokens_json = os.getenv("TOKENS_JSON")
