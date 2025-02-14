@@ -2,7 +2,7 @@ name: Auto Upload Articles
 
 on:
   schedule:
-    - cron: '0 */3 * * *'  # تشغيل كل ساعتين
+    - cron: '0 */3 * * *'  # تشغيل كل 3 ساعات
   workflow_dispatch:  # يسمح بتشغيله يدويًا أيضًا
 
 jobs:
@@ -22,8 +22,5 @@ jobs:
 
       - name: Run Upload Script
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          - name: Create tokens.json
-  run: echo '${{ secrets.TOKENS_JSON }}' > tokens.json
-
+          TOKENS_JSON: ${{ secrets.TOKENS_JSON }}  # قراءة التوكنات مباشرةً من Secrets
         run: python upload_articles.py
