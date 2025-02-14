@@ -4,8 +4,14 @@ import requests
 import time
 
 # تحميل Access Tokens من ملف JSON
-with open("tokens.json") as f:
-    tokens = json.load(f)
+import json
+import os
+
+tokens_json = os.getenv("TOKENS_JSON")
+if tokens_json:
+    tokens = json.loads(tokens_json)
+else:
+    raise FileNotFoundError("Tokens JSON is missing from environment variables.")
 
 # إعدادات المستودعات
 base_dir = "github_articles"
