@@ -23,4 +23,7 @@ jobs:
       - name: Run Upload Script
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          - name: Create tokens.json
+  run: echo '${{ secrets.TOKENS_JSON }}' > tokens.json
+
         run: python upload_articles.py
